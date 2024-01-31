@@ -6,8 +6,10 @@ info:
   contact:
     email: duardbr@gmail.com
     name: Carlos Eduardo
+servers:
+  - url: /
 paths:
-  /api/health:
+  /health:
     get:
       summary: Get API Health
       responses:
@@ -17,3 +19,61 @@ paths:
             application/json:
               example:
                 api-companies: ok
+
+  /companies/{quantity}:
+    get:
+      summary: Get fake companies
+      parameters:
+        - name: quantity
+          in: path
+          description: The number of companies to generate
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                companies:
+                  - id: 1
+                    name: Example Company 1
+                    email: example1@example.com
+                    vat: 123456789
+                    phone: +1234567890
+                    country: Example Country
+                    addresses:
+                      - id: 1
+                        street: Example Street 1
+                        streetName: Example Street
+                        buildingNumber: 123
+                        city: Example City
+                        zipcode: 12345
+                        country: Example Country
+                        county_code: EX
+                        latitude: 12.345678
+                        longitude: -45.67890
+                    website: http://example1.com
+                    image: http://example1.com/image.jpg
+                    contact:
+                      id: 1
+                      firstname: John
+                      lastname: Doe
+                      email: john.doe@example.com
+                      phone: +1234567890
+                      birthday: 1990-01-01
+                      gender: male
+                      address:
+                        id: 2
+                        street: Example Street 2
+                        streetName: Example Street
+                        buildingNumber: 456
+                        city: Example City
+                        zipcode: 54321
+                        country: Example Country
+                        county_code: EX
+                        latitude: 23.456789
+                        longitude: -54.67890
+                      website: http://johndoe.com
+                      image: http://johndoe.com/image.jpg

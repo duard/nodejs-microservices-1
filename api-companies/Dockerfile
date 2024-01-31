@@ -1,31 +1,38 @@
-FROM node:18.16.0-alpine as base
+# Stage 1: Build Stage
+FROM node:18.16.0-alpine as builder
 
-# Add package file
-COPY package.json ./
-COPY pnpm.lock ./
-COPY scripts/dev.sh ./scripts/dev.sh
+# Set working directory
+WORKDIR /app
 
-# Install deps
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+
+# Install dependencies
+RUN npm install -g pnpm
 RUN pnpm install
 
-# Copy source
+# Copy source code
+COPY tsconfig.json openapi.yml ./
 COPY src ./src
-COPY tsconfig.json ./tsconfig.json
-COPY openapi.yml ./openapi.yml
 
-# Build dist
+# Build TypeScript
 RUN pnpm build
 
-# Start production image build
+# Stage 2: Production Stage
 FROM node:18.16.0-alpine
 
-# Copy node modules and build directory
-COPY --from=base ./node_modules ./node_modules
-COPY --from=base /dist /dist
+# Set working directory
+WORKDIR /app
 
-# Copy static files
-COPY src/public dist/src/public
+# Copy node modules and built files from the builder stage
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+
+# Copy public files
+COPY src/public ./dist/src/public
 
 # Expose port 3000
 EXPOSE 3000
-CMD ["dist/src/server.js"]
+
+# Command to run the application
+CMD ["node", "dist/src/server.js"]

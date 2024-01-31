@@ -4,6 +4,7 @@ import yaml from 'js-yaml';
 import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 
+import * as CompanyController from './controllers/companies/index'; // Update the path accordingly
 import * as HealthController from './controllers/health/get';
 
 const swaggerUiOptions = {
@@ -14,7 +15,12 @@ const router = Router();
 
 const SWAGGER_YAML_FILEPATH = path.join(__dirname, '../openapi.yml');
 
+// api health
 router.get('/health', HealthController.default);
+
+// api companies
+router.get('/companies/:quantity', CompanyController.get); // Adjust the path and controller accordingly
+
 // Book routes
 // router.post('/book/add', BookController.add);
 // router.get('/book/all', BookController.all);

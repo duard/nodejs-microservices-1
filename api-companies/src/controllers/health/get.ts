@@ -1,4 +1,5 @@
 import { Request, RequestHandler } from 'express';
+
 import logger from '../../logger';
 import requestMiddleware from '../../middleware/request-middleware';
 

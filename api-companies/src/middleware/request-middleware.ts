@@ -1,8 +1,8 @@
 import {
-  NextFunction,
-  Request,
-  RequestHandler,
-  Response
+    NextFunction,
+    Request,
+    RequestHandler,
+    Response
 } from 'express';
 import Joi from 'joi';
 import BadRequest from '../errors/bad-request';
