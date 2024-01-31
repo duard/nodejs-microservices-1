@@ -16,5 +16,20 @@ services:
     env_file:
       - ./api-companies/.env
 
+  api-persons:
+    build:
+      context: ./api-persons
+      args:
+        - NODE_ENV=development
+      target: dev
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./api-persons:/app/
+    environment:
+      - SERVICE=api-persons
+    env_file:
+      - ./api-persons/.env
+
 volumes:
   data:
