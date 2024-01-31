@@ -1,5 +1,7 @@
-import get from './get';
+import getClients from './get-clients';
+import getCompanies from './get-companies';
+import getPersons from './get-persons';
 
 export {
-  get
+  getClients, getCompanies, getPersons
 };

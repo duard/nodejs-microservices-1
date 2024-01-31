@@ -3,7 +3,7 @@ import logger from '../../logger';
 
 export async function getRandonPersonByQuantity(quantity: number): Promise<any> {
   const url = `/persons?_quantity=${quantity}`;
-  const baseURL = 'http://localhost:3002';
+  const baseURL = 'http://api-persons:3002';
 
   try {
     return await axiosGet<any>(url, baseURL);

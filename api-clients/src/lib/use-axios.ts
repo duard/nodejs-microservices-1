@@ -13,7 +13,7 @@ function handleRequestError(error: AxiosError): void {
   if (error.response) {
     logger.error('Request failed with response data:', error.response.data);
   } else if (error.request) {
-    logger.error('No response received from the server.');
+    logger.error('No response received from the server.', error);
   } else {
     logger.error('Error setting up the request:', error.message);
   }

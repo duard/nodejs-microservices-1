@@ -7,7 +7,7 @@ info:
     email: duardbr@gmail.com
     name: Carlos Eduardo
 servers:
-  - url: /persons
+  - url: /
 paths:
   /health:
     get:

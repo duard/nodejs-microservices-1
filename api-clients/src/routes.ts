@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 
-import * as ClientController from './controllers/clients/index'; // Update the path accordingly
+import * as ClientController from './controllers/clients/index';
 import * as HealthController from './controllers/health/get';
 
 const swaggerUiOptions = {
@@ -19,7 +19,9 @@ const SWAGGER_YAML_FILEPATH = path.join(__dirname, '../openapi.yml');
 router.get('/health', HealthController.default);
 
 // api clients
-router.get('/clients', ClientController.get);
+router.get('/clients', ClientController.getClients);
+router.get('/companies', ClientController.getCompanies);
+router.get('/persons', ClientController.getPersons);
 
 // Dev routes
 if (process.env.NODE_ENV === 'development') {

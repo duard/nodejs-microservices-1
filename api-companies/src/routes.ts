@@ -19,14 +19,7 @@ const SWAGGER_YAML_FILEPATH = path.join(__dirname, '../openapi.yml');
 router.get('/health', HealthController.default);
 
 // api companies
-router.get('/companies/:quantity', CompanyController.get); // Adjust the path and controller accordingly
-
-// Book routes
-// router.post('/book/add', BookController.add);
-// router.get('/book/all', BookController.all);
-// router.get('/book/search', BookController.search);
-// router.get('/book/id/:bookId', BookController.get);
-// router.delete('/book/id/:bookId', BookController.remove);
+router.get('/companies', CompanyController.get);
 
 // Dev routes
 if (process.env.NODE_ENV === 'development') {

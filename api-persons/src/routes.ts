@@ -5,7 +5,7 @@ import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 
 import * as HealthController from './controllers/health/get';
-import * as PersonController from './controllers/persons/index'; // Update the path accordingly
+import * as PersonController from './controllers/persons/index';
 
 const swaggerUiOptions = {
   customCss: '.swagger-ui .topbar { display: none }'
@@ -19,14 +19,7 @@ const SWAGGER_YAML_FILEPATH = path.join(__dirname, '../openapi.yml');
 router.get('/health', HealthController.default);
 
 // api persons
-router.get('/persons/:quantity', PersonController.get); // Adjust the path and controller accordingly
-
-// Book routes
-// router.post('/book/add', BookController.add);
-// router.get('/book/all', BookController.all);
-// router.get('/book/search', BookController.search);
-// router.get('/book/id/:bookId', BookController.get);
-// router.delete('/book/id/:bookId', BookController.remove);
+router.get('/persons', PersonController.get);
 
 // Dev routes
 if (process.env.NODE_ENV === 'development') {

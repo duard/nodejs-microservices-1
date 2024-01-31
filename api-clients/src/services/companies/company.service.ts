@@ -3,10 +3,10 @@ import logger from '../../logger';
 
 export async function getRandonCompanyByQuantity(quantity: number): Promise<any> {
   const url = `/companies?_quantity=${quantity}`;
-  const baseURL = 'http://localhost:3001';
+  const baseURL = 'http://api-companies:3000';
 
   try {
-    console.log('buscando quantidade de pessoas no service', quantity);
+    console.log('buscando quantidade de empresas no service', quantity);
 
     return await axiosGet<any>(url, baseURL);
   } catch (error) {
