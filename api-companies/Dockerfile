@@ -1,38 +1,54 @@
-# Stage 1: Build Stage
-FROM node:18.16.0-alpine as builder
+# Use a smaller base image for the final image
+FROM node:20-alpine as base
 
-# Set working directory
+# Install curl for debugging
+RUN apk add --no-cache curl
+
+# Set node environment, either development or production
+# Defaults to production, compose overrides this to development on build and run
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
+
+# Default to port 3002 for Node
+ARG PORT=3000
+ENV PORT $PORT
+EXPOSE $PORT
+
+# You'll likely want the latest npm, regardless of node version, for speed and fixes
+# But pin this version for the best stability
+RUN npm i npm@latest -g
+
+# Install dependencies first
+# We have to create the dir with root and change perms
+RUN mkdir /app && chown node:node /app
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml ./
+# The official node image provides an unprivileged user as a security best practice
+# But we have to manually enable it. We put it here so npm installs dependencies as the same
+# user who runs the app.
+USER node
+COPY --chown=node:node package.json package-lock.json* ./
+RUN npm install --no-optional && npm cache clean --force
+ENV PATH /app/node_modules/.bin:$PATH
 
-# Install dependencies
-RUN npm install -g pnpm
-RUN pnpm install
+# A dev and build-only stage. We don't need to
+# Copy in code since we bind-mount it
+FROM base as dev
+ENV NODE_ENV=development
+RUN npm install --only=development
+# We use "npm start" here in development and node in production
+CMD ["npm", "run", "dev"] # Explicitly run npm script
 
-# Copy source code
-COPY tsconfig.json openapi.yml ./
-COPY src ./src
+FROM dev as test
+# Copy in our source code last, as it changes the most
+# Copy in as node user, so permissions match what we need
+COPY --chown=node:node . .
+CMD ["npm", "test"]
 
-# Build TypeScript
-RUN pnpm build
-
-# Stage 2: Production Stage
-FROM node:18.16.0-alpine
-
-# Set working directory
-WORKDIR /app
-
-# Copy node modules and built files from the builder stage
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-
-# Copy public files
-COPY src/public ./dist/src/public
-
-# Expose port 3000
-EXPOSE 3000
-
-# Command to run the application
-CMD ["node", "dist/src/server.js"]
+# This only has minimal deps and files
+FROM base as prod
+# Copy in as node user, so permissions match what we need
+COPY --chown=node:node . .
+# Check every 30s to ensure this service returns HTTP 200
+HEALTHCHECK --interval=600s CMD node ./src/healthcheck.js
+CMD ["node", "./index.js"]

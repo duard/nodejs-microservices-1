@@ -1,0 +1,20 @@
+version: '2.4'
+
+services:
+  api-companies:
+    build:
+      context: ./api-companies
+      args:
+        - NODE_ENV=development
+      target: dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api-companies:/app/
+    environment:
+      - SERVICE=api-companies
+    env_file:
+      - ./api-companies/.env
+
+volumes:
+  data:

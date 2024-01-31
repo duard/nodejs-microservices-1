@@ -16,11 +16,9 @@
   "main": "dist/index.js",
   "scripts": {
     "eslint": "eslint src/server.ts",
-    "postinstall": "chmod +x ./scripts/dev.sh",
-    "setup-actions": "chmod +x ./scripts/setup-github-actions.sh; ./scripts/setup-github-actions.sh",
     "build": "tsc",
     "lint": "./node_modules/eslint/bin/eslint.js  src --ext .ts",
-    "dev": "./scripts/dev.sh",
+    "dev": "NODE_ENV=development nodemon",
     "dev-server": "NODE_ENV=development nodemon",
     "ts-node-server": "ts-node src/server.ts",
     "start": "node dist/src/server.js",
