@@ -1,13 +1,13 @@
 openapi: 3.0.1
 info:
-  title: API Persons Service
+  title: API Clients Service
   version: 1.0.0
-  description: API Persons Service endpoints
+  description: API Clients Service endpoints
   contact:
     email: duardbr@gmail.com
     name: Carlos Eduardo
 servers:
-  - url: /persons
+  - url: /clients
 paths:
   /health:
     get:
@@ -18,13 +18,19 @@ paths:
           content:
             application/json:
               example:
-                api-persons: ok
+                api-clients: ok
 
-  /persons:
+  /clients:
     get:
-      summary: Get fake persons
+      summary: Get fake clients and persons
       parameters:
-        - name: _quantity
+        - name: quantityCompanies
+          in: query
+          description: The number of companies to generate
+          required: true
+          schema:
+            type: integer
+        - name: quantityPersons
           in: query
           description: The number of persons to generate
           required: true
@@ -36,6 +42,47 @@ paths:
           content:
             application/json:
               example:
+                companies:
+                  - id: 1
+                    name: Example Company 1
+                    email: example1@example.com
+                    vat: 123456789
+                    phone: +1234567890
+                    country: Example Country
+                    addresses:
+                      - id: 1
+                        street: Example Street 1
+                        streetName: Example Street
+                        buildingNumber: 123
+                        city: Example City
+                        zipcode: 12345
+                        country: Example Country
+                        county_code: EX
+                        latitude: 12.345678
+                        longitude: -45.67890
+                    website: http://example1.com
+                    image: http://example1.com/image.jpg
+                    contact:
+                      id: 1
+                      firstname: John
+                      lastname: Doe
+                      email: john.doe@example.com
+                      phone: +1234567890
+                      birthday: 1990-01-01
+                      gender: male
+                      address:
+                        id: 2
+                        street: Example Street 2
+                        streetName: Example Street
+                        buildingNumber: 456
+                        city: Example City
+                        zipcode: 54321
+                        country: Example Country
+                        county_code: EX
+                        latitude: 23.456789
+                        longitude: -54.67890
+                      website: http://johndoe.com
+                      image: http://johndoe.com/image.jpg
                 persons:
                   - id: 1
                     name: Example Person 1

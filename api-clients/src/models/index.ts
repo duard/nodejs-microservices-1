@@ -11,15 +11,28 @@ export interface Address {
   longitude: number;
 }
 
-export interface Person {
+export interface Contact {
   id: number;
   firstname: string;
   lastname: string;
   email: string;
   phone: string;
   birthday: string;
-  gender: 'male' | 'female';
+  gender: string;
   address: Address;
   website: string;
   image: string;
+}
+
+export interface Client {
+  id: number;
+  name: string;
+  email: string;
+  vat: string;
+  phone: string;
+  country: string;
+  addresses: Address[];
+  website: string;
+  image: string;
+  contact: Contact;
 }

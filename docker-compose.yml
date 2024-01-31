@@ -31,5 +31,20 @@ services:
     env_file:
       - ./api-persons/.env
 
+  api-clients:
+    build:
+      context: ./api-clients
+      args:
+        - NODE_ENV=development
+      target: dev
+    ports:
+      - "3004:3004"
+    volumes:
+      - ./api-clients:/app/
+    environment:
+      - SERVICE=api-clients
+    env_file:
+      - ./api-clients/.env
+
 volumes:
   data:
