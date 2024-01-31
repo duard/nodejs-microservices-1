@@ -1,42 +1,23 @@
 import { Request, Response } from 'express';
+import { wait } from '../../../utils/wait';
 import logger from '../../logger';
 import { getRandonCompanyByQuantity } from '../../services/companies/company.service';
 import { getRandonPersonByQuantity } from '../../services/persons';
 
-interface Person {
-  firstname: string;
-  lastname: string;
-  // Add other person properties as needed
-}
-
-interface Company {
-  name: string;
-  email: string;
-  phone: string;
-  // Add other company properties as needed
-}
-
-interface Client {
-  name: string;
-  email: string;
-  phone: string;
-  person: {
-    fullName: string;
-    // Add other person properties as needed
-  };
-}
-
 const getClientsController = async (req: Request, res: Response): Promise<void> => {
   try {
     const quantityCompanies = parseInt(req.query.quantityCompanies as string, 10) || 1;
+    const timeoutInSeconds = 5; // 1 second
 
     const companiesData: any = await getRandonCompanyByQuantity(quantityCompanies);
 
     const clients: any[] = [];
 
-    await Promise.all(companiesData?.companies.map(async (company: Company) => {
+    await Promise.all(companiesData?.companies.map(async (company: any) => {
+      await wait(timeoutInSeconds);
+
       const personsData: any = await getRandonPersonByQuantity(1);
-      logger.info(JSON.stringify(personsData));
+      logger.info('=>', JSON.stringify(personsData));
 
       const person: any = personsData?.persons[0];
 
