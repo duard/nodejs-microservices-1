@@ -1,0 +1,19 @@
+openapi: 3.0.1
+info:
+  title: API Companies Service
+  version: 1.0.0
+  description: API Companies Service endpoints
+  contact:
+    email: duardbr@gmail.com
+    name: Carlos Eduardo
+paths:
+  /api/health:
+    get:
+      summary: Get API Health
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                api-companies: ok
