@@ -1,7 +1,7 @@
 {
   "name": "api-persons",
   "version": "1.0.0",
-  "description": "Api para consulta de pessoas",
+  "description": "Api para consulta de empresas",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/duard/api-persons.git"

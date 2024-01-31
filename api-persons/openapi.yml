@@ -1,8 +1,8 @@
 openapi: 3.0.1
 info:
-  title: API Companies Service
+  title: API Persons Service
   version: 1.0.0
-  description: API Companies Service endpoints
+  description: API Persons Service endpoints
   contact:
     email: duardbr@gmail.com
     name: Carlos Eduardo
@@ -38,7 +38,7 @@ paths:
               example:
                 persons:
                   - id: 1
-                    name: Example Company 1
+                    name: Example Person 1
                     email: example1@example.com
                     vat: 123456789
                     phone: +1234567890
